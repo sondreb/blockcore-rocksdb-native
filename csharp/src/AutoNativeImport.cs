@@ -362,9 +362,13 @@ namespace NativeImport
             var type = typeBuilder.CreateTypeInfo();
 
             var versionParts = version.Split('.');
-            var names = versionParts.Select((p, i) => libName + "-" + string.Join(".", versionParts.Take(i + 1)))
-                .Reverse()
-                .Concat(Enumerable.Repeat(libName, 1));
+
+            //var names = versionParts.Select((p, i) => libName + "-" + string.Join(".", versionParts.Take(i + 1)))
+            //    .Reverse()
+            //    .Concat(Enumerable.Repeat(libName, 1));
+
+            // Skip looking for versions, only lib with static name.
+            var names = new[] { libName };
 
             // try to load locally
             var paths = new[]
