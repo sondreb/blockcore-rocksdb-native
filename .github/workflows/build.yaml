@@ -79,10 +79,10 @@ jobs:
 
     - name: Copy Native Libraries
       run: |
-        cp "${{github.workspace}}/build-native/runtimes/librocksdb.dylib" "${{ github.workspace }}/csharp/runtimes/osx-x64/native/librocksdb.dylib"
-        cp "${{github.workspace}}/build-native/runtimes/libzstd.1.dylib" "${{ github.workspace }}/csharp/runtimes/osx-x64/native/libzstd.1.dylib"
-        cp "${{github.workspace}}/build-native/runtimes/libsnappy.1.dylib" "${{ github.workspace }}/csharp/runtimes/osx-x64/native/libsnappy.1.dylib"
-        cp "${{github.workspace}}/build-native/runtimes/liblz4.1.dylib" "${{ github.workspace }}/csharp/runtimes/osx-x64/native/liblz4.1.dylib"
+        cp "${{github.workspace}}/build-native/runtimes/osx-x64/native/librocksdb.dylib" "${{ github.workspace }}/csharp/runtimes/osx-x64/native/librocksdb.dylib"
+        cp "${{github.workspace}}/build-native/runtimes/osx-x64/native/libzstd.1.dylib" "${{ github.workspace }}/csharp/runtimes/osx-x64/native/libzstd.1.dylib"
+        cp "${{github.workspace}}/build-native/runtimes/osx-x64/native/libsnappy.1.dylib" "${{ github.workspace }}/csharp/runtimes/osx-x64/native/libsnappy.1.dylib"
+        cp "${{github.workspace}}/build-native/runtimes/osx-x64/native/liblz4.1.dylib" "${{ github.workspace }}/csharp/runtimes/osx-x64/native/liblz4.1.dylib"
       shell: bash
 
     - name: Run CodeGen
