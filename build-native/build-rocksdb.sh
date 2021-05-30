@@ -200,13 +200,11 @@ else
             install_name_tool -change /usr/local/opt/lz4/lib/liblz4.1.dylib @rpath/runtimes/osx-x64/native/ librocksdb.dylib
             install_name_tool -change /usr/local/opt/zstd/lib/libzstd.1.dylib @rpath/runtimes/osx-x64/native/ librocksdb.dylib
 
-            install_name_tool -add_rpath @executable_path/../private/libs librocksdb.dylib
-            install_name_tool -add_rpath @executable_path/../runtimes/osx-x64/native librocksdb.dylib
             install_name_tool -add_rpath @executable_path/runtimes/osx-x64/native librocksdb.dylib
+            install_name_tool -add_rpath @executable_path librocksdb.dylib
             install_name_tool -add_rpath @loader_path/runtimes/osx-x64/native librocksdb.dylib
             install_name_tool -add_rpath @loader_path librocksdb.dylib
-            
-            install_name_tool -add_rpath @executable_path/. librocksdb.dylib
+            install_name_tool -add_rpath /Users/runner/work/blockcore-rocksdb-verifier/blockcore-rocksdb-verifier/bin/Release/netcoreapp3.1/runtimes/osx-x64/native/ librocksdb.dylib
 
             # Works
             #install_name_tool -change /usr/local/opt/snappy/lib/libsnappy.1.dylib /Users/runner/work/blockcore-rocksdb-verifier/blockcore-rocksdb-verifier/bin/Release/netcoreapp3.1/runtimes/osx-x64/native/libsnappy.1.dylib librocksdb.dylib
