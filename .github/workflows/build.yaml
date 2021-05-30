@@ -90,10 +90,10 @@ jobs:
       working-directory: "${{ github.workspace }}/build-codegen/"
 
     - name: Build
-      run: dotnet build -p:Version=${{env.ROCKSDBVERSION}} -p:AllowUnsafeBlocks=True -p:LangVersion=latest --configuration ${{env.BUILD_CONFIGURATION}} ${{env.PROJECT_PATH}}
+      run: dotnet build -p:Version=${{env.ROCKSDBRELEASE}} -p:AllowUnsafeBlocks=True -p:LangVersion=latest --configuration ${{env.BUILD_CONFIGURATION}} ${{env.PROJECT_PATH}}
 
     - name: Nuget Pack
-      run: dotnet pack --no-build -p:Version=${{env.ROCKSDBVERSION}} -p:AllowUnsafeBlocks=True -p:LangVersion=latest --configuration ${{env.BUILD_CONFIGURATION}} --output "${{github.workspace}}/package/" ${{env.PROJECT_PATH}}
+      run: dotnet pack --no-build -p:Version=${{env.ROCKSDBRELEASE}} -p:AllowUnsafeBlocks=True -p:LangVersion=latest --configuration ${{env.BUILD_CONFIGURATION}} --output "${{github.workspace}}/package/" ${{env.PROJECT_PATH}}
 
     # - name: Install dependencies
     #   run: dotnet restore
@@ -113,7 +113,7 @@ jobs:
 
     - uses: actions/upload-artifact@v2
       with:
-        name: Blockcore-RocksDB-NuGet-${{env.ROCKSDBVERSION}}-preview
+        name: Blockcore-RocksDB-NuGet-${{env.ROCKSDBRELEASE}}-preview
         path: "${{github.workspace}}/package/"
 
     - name: Nuget Push
