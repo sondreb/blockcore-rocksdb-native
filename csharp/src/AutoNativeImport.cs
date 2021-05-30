@@ -159,8 +159,6 @@ namespace NativeImport
 
             public IntPtr LoadLibrary(string path)
             {
-                Console.WriteLine("LoadLibrary: " + path);
-
                 dlerror();
                 var lib = dlopen(path, 2);
                 var errPtr = dlerror();
@@ -408,7 +406,7 @@ namespace NativeImport
                 IntPtr lib = IntPtr.Zero;
                 try
                 {
-                    Console.WriteLine("LoadLibrary (loop): " + spec.Path);
+                    Console.WriteLine("LoadLibrary: " + spec.Path);
 
                     lib = importer.LoadLibrary(spec.Path);
                     if (lib == IntPtr.Zero)

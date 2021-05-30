@@ -89,7 +89,7 @@ jobs:
       run: dotnet run ${{ github.workspace }}/build-codegen/CSharpGen.csproj
       working-directory: "${{ github.workspace }}/build-codegen/"
 
-    - name: Nuget Pack
+    - name: Build
       run: dotnet build -p:Version=${{env.ROCKSDBVERSION}} -p:AllowUnsafeBlocks=True -p:LangVersion=latest --configuration ${{env.BUILD_CONFIGURATION}} ${{env.PROJECT_PATH}}
 
     - name: Nuget Pack
@@ -115,6 +115,9 @@ jobs:
       with:
         name: Blockcore-RocksDB-NuGet-${{env.ROCKSDBVERSION}}-preview
         path: "${{github.workspace}}/package/"
+
+    - name: Nuget Push
+      run: nuget push "${{github.workspace}}/package/*.nupkg" -ApiKey ${{secrets.NUGET_KEY}} -Source "https://api.nuget.org/v3/index.json" -SkipDuplicate
 
     # - name: Release
     #   uses: sondreb/action-release@main
