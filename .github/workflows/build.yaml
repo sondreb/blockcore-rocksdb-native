@@ -35,10 +35,8 @@ jobs:
     env:
       PROJECT_PATH: './csharp/RocksDbSharp.csproj'
       BUILD_CONFIGURATION: 'Release'
-
-    env:
-      SOLUTION_PATH: 'src/RocksDB.sln'
-      BUILD_CONFIGURATION: 'Release'
+      # SOLUTION_PATH: 'src/RocksDB.sln'
+      # BUILD_CONFIGURATION: 'Release'
 
     steps:
 
