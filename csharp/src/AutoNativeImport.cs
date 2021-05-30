@@ -129,6 +129,9 @@ namespace NativeImport
             public PosixImporter()
             {
                 var platform = GetPlatform();
+
+                Console.WriteLine("PosixImporter: " + platform);
+
                 if (platform.StartsWith("Darwin"))
                     LibraryExtension = "dylib";
                 else
@@ -156,6 +159,8 @@ namespace NativeImport
 
             public IntPtr LoadLibrary(string path)
             {
+                Console.WriteLine("LoadLibrary: " + path);
+
                 dlerror();
                 var lib = dlopen(path, 2);
                 var errPtr = dlerror();
@@ -205,11 +210,16 @@ namespace NativeImport
                 RuntimeInformation.IsOSPlatform(OSPlatform.OSX) ? "osx" :
                 RuntimeInformation.IsOSPlatform(OSPlatform.Linux) ? "linux" :
                 "win";
+
+            Console.WriteLine("GetRuntimeId: " + $"{os}-{arch}");
+
             return $"{os}-{arch}";
         }
 
         public static T Import<T>(INativeLibImporter importer, string libName, string version, bool suppressUnload) where T : class
         {
+            Console.WriteLine("Import: " + $"{libName}-{version}");
+
             var subdir = GetArchName(RuntimeInformation.ProcessArchitecture);
             var runtimeId = GetRuntimeId(RuntimeInformation.ProcessArchitecture);
 
@@ -366,6 +376,7 @@ namespace NativeImport
                 "",
             };
 
+            Console.WriteLine("paths: " + string.Join(':', paths));
 
             var basePaths = new string[] {
                 Directory.GetCurrentDirectory(),
@@ -374,6 +385,9 @@ namespace NativeImport
                 Path.GetDirectoryName(Assembly.GetEntryAssembly()?.Location),
                 Path.GetDirectoryName(typeof(PosixImporter).GetTypeInfo().Assembly.Location),
             };
+
+            Console.WriteLine("basePaths: " + string.Join(':', basePaths));
+
             var search = basePaths
                 .Where(p => p != null)
                 .Distinct()
@@ -390,6 +404,8 @@ namespace NativeImport
                 IntPtr lib = IntPtr.Zero;
                 try
                 {
+                    Console.WriteLine("LoadLibrary: " + spec.Path);
+
                     lib = importer.LoadLibrary(spec.Path);
                     if (lib == IntPtr.Zero)
                         throw new NativeLoadException("LoadLibrary returned 0", null);
@@ -397,11 +413,17 @@ namespace NativeImport
                 catch (TargetInvocationException tie)
                 {
                     spec.Error = tie.InnerException;
+
+                    Console.WriteLine("TargetInvocationException: " + spec.Error.Message);
+
                     continue;
                 }
                 catch (Exception e)
                 {
                     spec.Error = e;
+
+                    Console.WriteLine("Exception: " + spec.Error.Message);
+
                     continue;
                 }
                 var obj = construct.Invoke(new object[] { importer, lib });
