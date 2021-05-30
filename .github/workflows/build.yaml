@@ -16,14 +16,14 @@ jobs:
         # os: [ windows-latest, ubuntu-latest, macos-latest ]
         os: [ macos-latest ]
         include:
-          - os: windows-latest
-            extension: "dll"
-            runtime: "win-x64"
-            filename: "librocksdb.dll"
-          - os: ubuntu-latest
-            extension: "so"
-            runtime: "linux-x64"
-            filename: "librocksdb.so"
+          # - os: windows-latest
+          #   extension: "dll"
+          #   runtime: "win-x64"
+          #   filename: "librocksdb.dll"
+          # - os: ubuntu-latest
+          #   extension: "so"
+          #   runtime: "linux-x64"
+          #   filename: "librocksdb.so"
           - os: macos-latest
             runtime: "osx-x64"
             extension: "dylib"
