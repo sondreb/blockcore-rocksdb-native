@@ -190,18 +190,18 @@ namespace NativeImport
             }
         }
 
-        public static string GetArchName(Architecture arch)
-        {
-            switch (arch)
-            {
-                case Architecture.X86:
-                    return "i386";
-                case Architecture.X64:
-                    return "amd64";
-                default:
-                    return arch.ToString().ToLower();
-            }
-        }
+        //public static string GetArchName(Architecture arch)
+        //{
+        //    switch (arch)
+        //    {
+        //        case Architecture.X86:
+        //            return "i386";
+        //        case Architecture.X64:
+        //            return "amd64";
+        //        default:
+        //            return arch.ToString().ToLower();
+        //    }
+        //}
 
         private static string GetRuntimeId(Architecture processArchitecture)
         {
@@ -220,7 +220,7 @@ namespace NativeImport
         {
             Console.WriteLine("Import: " + $"{libName}-{version}");
 
-            var subdir = GetArchName(RuntimeInformation.ProcessArchitecture);
+            //var subdir = GetArchName(RuntimeInformation.ProcessArchitecture);
             var runtimeId = GetRuntimeId(RuntimeInformation.ProcessArchitecture);
 
             var assemblyName = new AssemblyName("DynamicLink");
@@ -374,9 +374,9 @@ namespace NativeImport
             var paths = new[]
             {
                 Path.Combine("runtimes", runtimeId, "native"),
-                Path.Combine("native", subdir),
-                "native",
-                subdir,
+                //Path.Combine("native", subdir),
+                //"native",
+                //subdir,
                 "",
             };
 
@@ -385,9 +385,9 @@ namespace NativeImport
             var basePaths = new string[] {
                 Directory.GetCurrentDirectory(),
                 Path.GetDirectoryName(UriToPath(AppContext.BaseDirectory)),
-                Path.GetDirectoryName(UriToPath(Transitional.CurrentFramework.GetBaseDirectory())),
+                // Path.GetDirectoryName(UriToPath(Transitional.CurrentFramework.GetBaseDirectory())),
                 Path.GetDirectoryName(Assembly.GetEntryAssembly()?.Location),
-                Path.GetDirectoryName(typeof(PosixImporter).GetTypeInfo().Assembly.Location),
+                // Path.GetDirectoryName(typeof(PosixImporter).GetTypeInfo().Assembly.Location),
             };
 
             Console.WriteLine("basePaths: " + string.Join(':', basePaths));
@@ -408,7 +408,7 @@ namespace NativeImport
                 IntPtr lib = IntPtr.Zero;
                 try
                 {
-                    Console.WriteLine("LoadLibrary: " + spec.Path);
+                    Console.WriteLine("LoadLibrary (loop): " + spec.Path);
 
                     lib = importer.LoadLibrary(spec.Path);
                     if (lib == IntPtr.Zero)
