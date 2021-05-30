@@ -79,8 +79,6 @@ jobs:
 
     - name: Copy Native Libraries
       run: |
-        cp "${{github.workspace}}/build-native/runtimes/librocksdb.dll" "${{ github.workspace }}/csharp/runtimes/win-x64/native/librocksdb.dll"
-        cp "${{github.workspace}}/build-native/runtimes/librocksdb.so" "${{ github.workspace }}/csharp/runtimes/linux-x64/native/librocksdb.so"
         cp "${{github.workspace}}/build-native/runtimes/librocksdb.dylib" "${{ github.workspace }}/csharp/runtimes/osx-x64/native/librocksdb.dylib"
         cp "${{github.workspace}}/build-native/runtimes/libzstd.1.dylib" "${{ github.workspace }}/csharp/runtimes/osx-x64/native/libzstd.1.dylib"
         cp "${{github.workspace}}/build-native/runtimes/libsnappy.1.dylib" "${{ github.workspace }}/csharp/runtimes/osx-x64/native/libsnappy.1.dylib"
