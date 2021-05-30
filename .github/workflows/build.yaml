@@ -13,7 +13,8 @@ jobs:
 
     strategy:
       matrix:
-        os: [ windows-latest, ubuntu-latest, macos-latest ]
+        # os: [ windows-latest, ubuntu-latest, macos-latest ]
+        os: [ macos-latest ]
         include:
           - os: windows-latest
             extension: "dll"
@@ -30,6 +31,10 @@ jobs:
       fail-fast: false
 
     runs-on: ${{ matrix.os }}
+
+    env:
+      PROJECT_PATH: './csharp/RocksDbSharp.csproj'
+      BUILD_CONFIGURATION: 'Release'
 
     env:
       SOLUTION_PATH: 'src/RocksDB.sln'
@@ -74,19 +79,39 @@ jobs:
     - name: Display structure of files (after build)
       run: ls -R
 
+    - name: Copy Native Libraries
+      run: |
+        cp "${{github.workspace}}/build-native/runtimes/librocksdb.dll" "${{ github.workspace }}/csharp/runtimes/win-x64/native/librocksdb.dll"
+        cp "${{github.workspace}}/build-native/runtimes/librocksdb.so" "${{ github.workspace }}/csharp/runtimes/linux-x64/native/librocksdb.so"
+        cp "${{github.workspace}}/build-native/runtimes/librocksdb.dylib" "${{ github.workspace }}/csharp/runtimes/osx-x64/native/librocksdb.dylib"
+        cp "${{github.workspace}}/build-native/runtimes/libzstd.1.dylib" "${{ github.workspace }}/csharp/runtimes/osx-x64/native/libzstd.1.dylib"
+        cp "${{github.workspace}}/build-native/runtimes/libsnappy.1.dylib" "${{ github.workspace }}/csharp/runtimes/osx-x64/native/libsnappy.1.dylib"
+        cp "${{github.workspace}}/build-native/runtimes/liblz4.1.dylib" "${{ github.workspace }}/csharp/runtimes/osx-x64/native/liblz4.1.dylib"
+      shell: bash
+
+    - name: Run CodeGen
+      run: dotnet run ${{ github.workspace }}/build-codegen/CSharpGen.csproj
+      working-directory: "${{ github.workspace }}/build-codegen/"
+
+    - name: Nuget Pack
+      run: dotnet build -p:Version=${{env.ROCKSDBVERSION}} -p:AllowUnsafeBlocks=True -p:LangVersion=latest --configuration ${{env.BUILD_CONFIGURATION}} ${{env.PROJECT_PATH}}
+
+    - name: Nuget Pack
+      run: dotnet pack --no-build -p:Version=${{env.ROCKSDBVERSION}} -p:AllowUnsafeBlocks=True -p:LangVersion=latest --configuration ${{env.BUILD_CONFIGURATION}} --output "${{github.workspace}}/package/" ${{env.PROJECT_PATH}}
+
     - uses: actions/upload-artifact@v2
       with:
-        name: Blockcore-RocksDB-${{env.ROCKSDBRELEASE}}-${{matrix.os}}-preview
-        path: "${{github.workspace}}/build-native/runtimes/"
+        name: Blockcore-RocksDB-NuGet-${{env.ROCKSDBVERSION}}-preview
+        path: "${{github.workspace}}/package/"
 
-    - name: Release
-      uses: sondreb/action-release@main
-      with:
-        token: ${{ secrets.GITHUB_TOKEN }}
-        #files: "${{github.workspace}}/build-native/runtimes/${{ matrix.runtime }}/native/librocksdb.${{ matrix.extension }}"
-        folder: "${{github.workspace}}/build-native/runtimes/${{ matrix.runtime }}/native/"
-        draft: true
-        prerelease: false
-        body: 'win-x64 (.dll), linux-x64 (.so), osx-x64 (.dylip)'
-        name: "Blockcore RocksDB Native (Release ${{env.ROCKSDBRELEASE}})"
-        tag: ${{env.ROCKSDBRELEASE}}
+    # - name: Release
+    #   uses: sondreb/action-release@main
+    #   with:
+    #     token: ${{ secrets.GITHUB_TOKEN }}
+    #     #files: "${{github.workspace}}/build-native/runtimes/${{ matrix.runtime }}/native/librocksdb.${{ matrix.extension }}"
+    #     folder: "${{github.workspace}}/build-native/runtimes/${{ matrix.runtime }}/native/"
+    #     draft: true
+    #     prerelease: false
+    #     body: 'win-x64 (.dll), linux-x64 (.so), osx-x64 (.dylip)'
+    #     name: "Blockcore RocksDB Native (Release ${{env.ROCKSDBRELEASE}})"
+    #     tag: ${{env.ROCKSDBRELEASE}}
