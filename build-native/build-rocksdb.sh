@@ -202,9 +202,9 @@ else
             # install_name_tool -change /usr/local/opt/lz4/lib/liblz4.1.dylib "@rpath/runtimes/osx-x64/native/liblz4.1.dylib" librocksdb.dylib
             # install_name_tool -change /usr/local/opt/zstd/lib/libzstd.1.dylib "@rpath/runtimes/osx-x64/native/libzstd.1.dylib" librocksdb.dylib
 
-            install_name_tool -change /usr/local/opt/snappy/lib/libsnappy.1.dylib "libsnappy.1.dylib" librocksdb.dylib
-            install_name_tool -change /usr/local/opt/lz4/lib/liblz4.1.dylib "liblz4.1.dylib" librocksdb.dylib
-            install_name_tool -change /usr/local/opt/zstd/lib/libzstd.1.dylib "libzstd.1.dylib" librocksdb.dylib
+            # install_name_tool -change /usr/local/opt/snappy/lib/libsnappy.1.dylib "libsnappy.1.dylib" librocksdb.dylib
+            # install_name_tool -change /usr/local/opt/lz4/lib/liblz4.1.dylib "liblz4.1.dylib" librocksdb.dylib
+            # install_name_tool -change /usr/local/opt/zstd/lib/libzstd.1.dylib "libzstd.1.dylib" librocksdb.dylib
 
             # install_name_tool -add_rpath "./runtimes/osx-x64/native" librocksdb.dylib
             # install_name_tool -id "@executable_path/../Frameworks/hardware.2.dylib"  hardware.2.dylib
