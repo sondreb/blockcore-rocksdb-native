@@ -45,12 +45,12 @@
   </ItemGroup>
   
   <ItemGroup>
-    <Content CopyToOutputDirectory="PreserveNewest" Include="runtimes/linux-x64/native/librocksdb.so" Link="librocksdb.so" Pack="true" PackagePath="librocksdb.so" />
-    <Content CopyToOutputDirectory="PreserveNewest" Include="runtimes/win-x64/native/librocksdb.dll" Link="librocksdb.dll" Pack="true" PackagePath="librocksdb.dll" />
-    <Content CopyToOutputDirectory="PreserveNewest" Include="runtimes/osx-x64/native/librocksdb.dylib" Link="librocksdb.dylib" Pack="true" PackagePath="librocksdb.dylib" />
-    <Content CopyToOutputDirectory="PreserveNewest" Include="runtimes/osx-x64/native/liblz4.1.dylib" Link="liblz4.1.dylib" Pack="true" PackagePath="liblz4.1.dylib" />
-    <Content CopyToOutputDirectory="PreserveNewest" Include="runtimes/osx-x64/native/libsnappy.1.dylib" Link="libsnappy.1.dylib" Pack="true" PackagePath="libsnappy.1.dylib" />
-    <Content CopyToOutputDirectory="PreserveNewest" Include="runtimes/osx-x64/native/libzstd.1.dylib" Link="libzstd.1.dylib" Pack="true" PackagePath="libzstd.1.dylib" />
+    <Content CopyToOutputDirectory="PreserveNewest" Include="runtimes/linux-x64/native/librocksdb.so" Link="librocksdb.so" Pack="true" PackagePath="runtimes/linux-x64/native/;lib;lib/netstandard2.1;lib/net5.0;;" />
+    <Content CopyToOutputDirectory="PreserveNewest" Include="runtimes/win-x64/native/librocksdb.dll" Link="librocksdb.dll" Pack="true" PackagePath="runtimes/linux-x64/native/;lib;lib/netstandard2.1;lib/net5.0;;" />
+    <Content CopyToOutputDirectory="PreserveNewest" Include="runtimes/osx-x64/native/librocksdb.dylib" Link="librocksdb.dylib" Pack="true" PackagePath="runtimes/linux-x64/native/;lib;lib/netstandard2.1;lib/net5.0;;" />
+    <Content CopyToOutputDirectory="PreserveNewest" Include="runtimes/osx-x64/native/liblz4.1.dylib" Link="liblz4.1.dylib" Pack="true" PackagePath="runtimes/linux-x64/native/;lib;lib/netstandard2.1;lib/net5.0;;" />
+    <Content CopyToOutputDirectory="PreserveNewest" Include="runtimes/osx-x64/native/libsnappy.1.dylib" Link="libsnappy.1.dylib" Pack="true" PackagePath="runtimes/linux-x64/native/;lib;lib/netstandard2.1;lib/net5.0;;" />
+    <Content CopyToOutputDirectory="PreserveNewest" Include="runtimes/osx-x64/native/libzstd.1.dylib" Link="libzstd.1.dylib" Pack="true" PackagePath="runtimes/linux-x64/native/;lib;lib/netstandard2.1;lib/net5.0;;" />
   </ItemGroup>
 
   <ItemGroup>
