@@ -186,12 +186,15 @@ else
             echo "Adding dependencies.."
             update_brew_pack_version
 
+            otool -l librocksdb${LIBEXT}
+
             echo "Copying libraries..."
             cp /usr/local/Cellar/snappy/${SNAPPYVERSION}/lib/libsnappy.1.dylib .
             cp /usr/local/Cellar/lz4/${LZ4_VERSION_INSTALLED}/lib/liblz4.1.dylib .
             cp /usr/local/Cellar/zstd/${ZSTD_VERSION_INSTALLED}/lib/libzstd.1.dylib .
 
             echo "Updating librocksdb.dylib"
+
             # install_name_tool -change /usr/local/opt/snappy/lib/libsnappy.1.dylib "@loader_path/runtimes/osx-x64/native/libsnappy.1.dylib" librocksdb.dylib
             # install_name_tool -change /usr/local/opt/lz4/lib/liblz4.1.dylib "@loader_path/runtimes/osx-x64/native/liblz4.1.dylib" librocksdb.dylib
             # install_name_tool -change /usr/local/opt/zstd/lib/libzstd.1.dylib "@loader_path/runtimes/osx-x64/native/libzstd.1.dylib" librocksdb.dylib
@@ -199,17 +202,22 @@ else
             install_name_tool -change /usr/local/opt/snappy/lib/libsnappy.1.dylib "@loader_path/libsnappy.1.dylib" librocksdb.dylib
             install_name_tool -change /usr/local/opt/lz4/lib/liblz4.1.dylib "@loader_path/liblz4.1.dylib" librocksdb.dylib
             install_name_tool -change /usr/local/opt/zstd/lib/libzstd.1.dylib "@loader_path/libzstd.1.dylib" librocksdb.dylib
-            
+
             echo "Finishing..."
             cp -vL ./libsnappy.1.dylib ../runtimes/${RUNTIME}/native/
             cp -vL ./liblz4.1.dylib ../runtimes/${RUNTIME}/native/
             cp -vL ./libzstd.1.dylib ../runtimes/${RUNTIME}/native/
+
+            otool -l librocksdb${LIBEXT}
+
         else
             echo "Adding linux dependencies..."
             # TODO: Add Linux dependencies
         fi
 
         cp -vL ./librocksdb${LIBEXT} ../runtimes/${RUNTIME}/native/  
+
+        
 
     }) || fail "rocksdb build failed"
 fi
