@@ -189,9 +189,13 @@ else
             otool -l librocksdb${LIBEXT}
 
             echo "Copying libraries..."
-            cp /usr/local/Cellar/snappy/${SNAPPYVERSION}/lib/libsnappy.1.dylib .
-            cp /usr/local/Cellar/lz4/${LZ4_VERSION_INSTALLED}/lib/liblz4.1.dylib .
-            cp /usr/local/Cellar/zstd/${ZSTD_VERSION_INSTALLED}/lib/libzstd.1.dylib .
+            # cp /usr/local/Cellar/snappy/${SNAPPYVERSION}/lib/libsnappy.1.dylib .
+            # cp /usr/local/Cellar/lz4/${LZ4_VERSION_INSTALLED}/lib/liblz4.1.dylib .
+            # cp /usr/local/Cellar/zstd/${ZSTD_VERSION_INSTALLED}/lib/libzstd.1.dylib .
+
+            cp /usr/local/lib/libsnappy.dylib .
+            cp /usr/local/lib/liblz4.dylib .
+            cp /usr/local/lib/libzstd.dylib .
 
             echo "Updating librocksdb.dylib"
 
@@ -199,14 +203,14 @@ else
             # install_name_tool -change /usr/local/opt/lz4/lib/liblz4.1.dylib "@loader_path/runtimes/osx-x64/native/liblz4.1.dylib" librocksdb.dylib
             # install_name_tool -change /usr/local/opt/zstd/lib/libzstd.1.dylib "@loader_path/runtimes/osx-x64/native/libzstd.1.dylib" librocksdb.dylib
 
-            install_name_tool -change /usr/local/opt/snappy/lib/libsnappy.1.dylib "@loader_path/libsnappy.1.dylib" librocksdb.dylib
-            install_name_tool -change /usr/local/opt/lz4/lib/liblz4.1.dylib "@loader_path/liblz4.1.dylib" librocksdb.dylib
-            install_name_tool -change /usr/local/opt/zstd/lib/libzstd.1.dylib "@loader_path/libzstd.1.dylib" librocksdb.dylib
+            install_name_tool -change /usr/local/opt/snappy/lib/libsnappy.dylib "@loader_path/libsnappy.dylib" librocksdb.dylib
+            install_name_tool -change /usr/local/opt/lz4/lib/liblz4.dylib "@loader_path/liblz4.dylib" librocksdb.dylib
+            install_name_tool -change /usr/local/opt/zstd/lib/libzstd.dylib "@loader_path/libzstd.dylib" librocksdb.dylib
 
             echo "Finishing..."
-            cp -vL ./libsnappy.1.dylib ../runtimes/${RUNTIME}/native/
-            cp -vL ./liblz4.1.dylib ../runtimes/${RUNTIME}/native/
-            cp -vL ./libzstd.1.dylib ../runtimes/${RUNTIME}/native/
+            cp -vL ./libsnappy.dylib ../runtimes/${RUNTIME}/native/
+            cp -vL ./liblz4.dylib ../runtimes/${RUNTIME}/native/
+            cp -vL ./libzstd.dylib ../runtimes/${RUNTIME}/native/
 
             otool -l librocksdb${LIBEXT}
 

@@ -83,12 +83,12 @@ jobs:
       run: |
         cp "${{github.workspace}}/build-native/runtimes/osx-x64/native/librocksdb.dylib" "${{ github.workspace }}/csharp/runtimes/osx-x64/native/librocksdb.dylib"
         cp "${{github.workspace}}/build-native/runtimes/osx-x64/native/libzstd.1.dylib" "${{ github.workspace }}/csharp/runtimes/osx-x64/native/libzstd.1.dylib"
-        cp "${{github.workspace}}/build-native/runtimes/osx-x64/native/libsnappy.1.dylib" "${{ github.workspace }}/csharp/runtimes/osx-x64/native/libsnappy.1.dylib"
-        cp "${{github.workspace}}/build-native/runtimes/osx-x64/native/liblz4.1.dylib" "${{ github.workspace }}/csharp/runtimes/osx-x64/native/liblz4.1.dylib"
+        cp "${{github.workspace}}/build-native/runtimes/osx-x64/native/libsnappy.dylib" "${{ github.workspace }}/csharp/runtimes/osx-x64/native/libsnappy.dylib"
+        cp "${{github.workspace}}/build-native/runtimes/osx-x64/native/liblz4.dylib" "${{ github.workspace }}/csharp/runtimes/osx-x64/native/liblz4.dylib"
 
-        install_name_tool -change /usr/local/opt/snappy/lib/libsnappy.1.dylib "@loader_path/libsnappy.1.dylib" ${{ github.workspace }}/csharp/runtimes/osx-x64/native/librocksdb.dylib
-        install_name_tool -change /usr/local/opt/lz4/lib/liblz4.1.dylib "@loader_path/liblz4.1.dylib" ${{ github.workspace }}/csharp/runtimes/osx-x64/native/librocksdb.dylib
-        install_name_tool -change /usr/local/opt/zstd/lib/libzstd.1.dylib "@loader_path/libzstd.1.dylib" ${{ github.workspace }}/csharp/runtimes/osx-x64/native/librocksdb.dylib
+        install_name_tool -change /usr/local/opt/snappy/lib/libsnappy.dylib "@loader_path/libsnappy.dylib" ${{ github.workspace }}/csharp/runtimes/osx-x64/native/librocksdb.dylib
+        install_name_tool -change /usr/local/opt/lz4/lib/liblz4.dylib "@loader_path/liblz4.dylib" ${{ github.workspace }}/csharp/runtimes/osx-x64/native/librocksdb.dylib
+        install_name_tool -change /usr/local/opt/zstd/lib/libzstd.dylib "@loader_path/libzstd.dylib" ${{ github.workspace }}/csharp/runtimes/osx-x64/native/librocksdb.dylib
       shell: bash
 
     - name: Run CodeGen
